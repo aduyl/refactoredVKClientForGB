@@ -9,10 +9,9 @@ import UIKit
 
 class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var array: [UIImage]
-    let user: tableCellDataClass
+    let user: tableCellData
     private var myCollectionView: UICollectionView?
-    
-    init(user: tableCellDataClass){
+    init(user: tableCellData){
         self.user = user
         self.array = user.usersPhotos!
         super.init(nibName: nil, bundle: nil)
@@ -20,14 +19,12 @@ class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, U
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.width , height: view.frame.height * 2 / 3)
@@ -63,11 +60,12 @@ class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, U
         cell.userPhoto.addGestureRecognizer(recognaizer)
         return cell
     }
+    
     @objc func pushNvigationButton(){
         navigationController?.popViewController(animated: true)
     }
     @objc func imageHasBeenTapped(){
-        let newContr = PhotosController(array: array)
+        let newContr = ShowAllPhotos(photoArray: array)
         navigationController?.pushViewController(newContr, animated: true)
     }
 }

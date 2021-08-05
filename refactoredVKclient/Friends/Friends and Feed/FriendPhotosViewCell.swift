@@ -8,7 +8,7 @@
 import UIKit
 
 class FriendPhotosViewCell: UICollectionViewCell {
-    var user: tableCellDataClass?
+    var user: tableCellData?
     static let identifier = "FriendPhotosViewCell"
     private var isLiked = true
     var index: Int = 0
@@ -28,7 +28,7 @@ class FriendPhotosViewCell: UICollectionViewCell {
     }()
     var userPhoto: UIImageView = {
         let img = UIImageView()
-        img.contentMode = .scaleAspectFill
+        img.contentMode = .scaleAspectFit
         img.clipsToBounds = true
         return img
     }()
@@ -65,7 +65,7 @@ class FriendPhotosViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    public func configure(user: tableCellDataClass, index: Int) {
+    public func configure(user: tableCellData, index: Int) {
         self.index = index
         self.user = user
         avatar.image = UIImage(named: user.name!)
@@ -97,7 +97,7 @@ class FriendPhotosViewCell: UICollectionViewCell {
                                        width: self.bounds.width - 40,
                                        height: self.bounds.height * 0.12)
         userPhoto.frame = CGRect(x: 20,
-                                 y: self.frame.height * 0.12,
+                                 y: self.frame.height * 0.12 + 5,
                                  width: self.bounds.width - 40,
                                  height: self.bounds.height * 0.77)
         likeContainer.frame = CGRect(x: 20,
@@ -130,12 +130,15 @@ class FriendPhotosViewCell: UICollectionViewCell {
         if isLiked{
             self.likeButton.setImage(UIImage.init(systemName: "heart.fill"), for: .normal)
             self.likeCount = likeCount + 1
-            self.likeLabel.text = "\(likeCount) likes"
         } else {
             self.likeButton.setImage(UIImage.init(systemName: "heart"), for: .normal)
             self.likeCount = likeCount - 1
-            self.likeLabel.text = "\(likeCount) likes"
         }
+        UIView.transition(with: self.likeLabel,
+                          duration: 0.3,
+                          options: .transitionCrossDissolve, animations:{
+                            self.likeLabel.text = "\(self.likeCount) likes"
+                          })
         self.isLiked = !self.isLiked
     }
 }

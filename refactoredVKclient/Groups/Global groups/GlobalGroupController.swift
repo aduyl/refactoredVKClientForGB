@@ -9,15 +9,17 @@ import UIKit
 import Foundation
 
 protocol DataDelegate: AnyObject {
-    func transferGroup(group: tableCellDataClass)
+    func transferGroup(group: tableCellData)
 }
 
 class GlobalGroupController: UniversalTableController {
-    var sentElement: tableCellDataClass?
+    var sentElement: tableCellData?
     weak var delegate: DataDelegate?
+    
     override func getDataArray() {
         self.dataArray = TableCellDataAPI.getGroupCellData()
     }
+    
     override func configureNavigation() {
         let searchBar = UISearchBar(frame: CGRect(x: CGFloat(Double(self.view.frame.width) * 0.1), y: 30, width: CGFloat(Double(self.view.frame.width) * 0.9), height: 44))
         view.addSubview(searchBar)
@@ -42,7 +44,7 @@ class GlobalGroupController: UniversalTableController {
 }
 
 extension GlobalGroupController {
-    func getGroupFromGlobal(_ group: tableCellDataClass){
+    func getGroupFromGlobal(_ group: tableCellData){
         delegate?.transferGroup(group: group)
     }
 }

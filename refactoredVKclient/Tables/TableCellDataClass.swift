@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class tableCellDataClass{
+class tableCellData{
     var avatar: UIImage?
     var name: String?
     var itemProreties: String? // for user -- age, for group -- description
@@ -22,13 +22,13 @@ class tableCellDataClass{
         //super.init()
     }
     
-    var tableCellDataClass: tableCellDataClass?
+    var tableCellDataClass: tableCellData?
 }
 
 class usersGroup {
-    var usersGroup: [tableCellDataClass]?
+    var usersGroup: [tableCellData]?
     
-    init(usersGroup: [tableCellDataClass]) {
+    init(usersGroup: [tableCellData]) {
         self.usersGroup = usersGroup
     }
     var saveGroups: usersGroup?

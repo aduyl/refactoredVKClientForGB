@@ -8,7 +8,7 @@
 import UIKit
 
 class UniversalTableViewCell: UITableViewCell {
-    var group: tableCellDataClass? {
+    var group: tableCellData? {
         didSet{
             guard let groupItem = group else {return}
             if let name = groupItem.name{
@@ -20,13 +20,13 @@ class UniversalTableViewCell: UITableViewCell {
             }
         }
     }
-    var saveGroup: tableCellDataClass?
+    var saveGroup: tableCellData?
     let avatarImageView: UIImageView = {
-     let img = UIImageView()
-     img.contentMode = .scaleAspectFill // image will never be strecthed vertially or horizontally
-     img.translatesAutoresizingMaskIntoConstraints = false // enable autolayout
-     img.layer.cornerRadius = 35
-     img.clipsToBounds = true
+        let img = UIImageView()
+        img.contentMode = .scaleAspectFill
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.layer.cornerRadius = 35
+        img.clipsToBounds = true
      return img
      }()
     let nameLabel:UILabel = {
@@ -52,6 +52,21 @@ class UniversalTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         saveGroup = group
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureUI()
+        addGestureRecognizerToAvatarImage()
+    }
+    
+     required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
+    }
+    
+    func addGestureRecognizerToAvatarImage() {
+        let recognaizer = UITapGestureRecognizer(target: self, action: #selector(imageHasBeenTapped))
+        self.avatarImageView.isUserInteractionEnabled = true
+        self.avatarImageView.addGestureRecognizer(recognaizer)
+    }
+    
+    func configureUI() {
         self.contentView.addSubview(avatarImageView)
         containerView.addSubview(nameLabel)
         containerView.addSubview(propertyLabel)
@@ -71,11 +86,27 @@ class UniversalTableViewCell: UITableViewCell {
         propertyLabel.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor).isActive = true
         propertyLabel.topAnchor.constraint(equalTo:self.nameLabel.bottomAnchor).isActive = true
     }
-
-     required init?(coder aDecoder: NSCoder) {
-       super.init(coder: aDecoder)
+    
+    @objc func imageHasBeenTapped() {
+        print("here")
+        let sizeWidth = self.avatarImageView.frame.width
+        let sizeHeigth = self.avatarImageView.frame.height
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.3,
+                       options: [],
+                       animations: {
+                        self.avatarImageView.frame = CGRect(x: 1, y: 1, width: sizeWidth * 0.9, height: sizeHeigth * 0.9)
+                       })
+        UIView.animate(withDuration: 0.4,
+                       delay: 0.3,
+                       usingSpringWithDamping: 0.3,
+                       initialSpringVelocity: 0.4,
+                       options: [],
+                       animations: {
+                        self.avatarImageView.frame = CGRect(x: 0, y: 0, width: sizeWidth, height: sizeHeigth)
+                       })
     }
-    
-    
-   
 }
+
