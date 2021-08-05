@@ -12,7 +12,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        let groups = UsersGroupController()
+        let groups = UsersGroupController(configureWithNavigation: true)
         let frirnds = FriendsController(configureWithNavigation: false)
             let groupIcon = UITabBarItem(title: "Group", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3"))
             groups.tabBarItem = groupIcon
