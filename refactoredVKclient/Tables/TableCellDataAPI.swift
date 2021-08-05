@@ -10,7 +10,7 @@ import UIKit
 
 struct HeaderSection {
     let letter: String
-    let tableCell: [tableCellData]
+    var tableCell: [tableCellData]
 }
 
 

@@ -8,18 +8,15 @@
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
-
-    override func viewDidLoad() {
-           super.viewDidLoad()
-           delegate = self
-       }
     
-    override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        delegate = self
         let groups = UsersGroupController()
+        let frirnds = FriendsController(configureWithNavigation: false)
             let groupIcon = UITabBarItem(title: "Group", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3"))
             groups.tabBarItem = groupIcon
-            let frirnds = FriendsController(configureWithNavigation: false)
+
             let friendsIcon = UITabBarItem(title: "Friends", image: UIImage(systemName: "person.2"), selectedImage: UIImage(systemName: "person.2"))
             frirnds.tabBarItem = friendsIcon
 

@@ -69,7 +69,10 @@ class UsersGroupController: ViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        dataArray.remove(at: indexPath.row)
+        dataArray[indexPath.section].tableCell.remove(at: indexPath.row)
+        if dataArray[indexPath.section].tableCell.count == 0 {
+            dataArray.remove(at: indexPath.section)
+        }
         self.usersTableView.reloadData()
     }
     
