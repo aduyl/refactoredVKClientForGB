@@ -24,18 +24,24 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8hY-7h-UTM">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="8hY-7h-UTM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M7m-9g-wPG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0RL-Xe-8VO" secondAttribute="trailing" id="Srd-mz-Ebo"/>
                             <constraint firstItem="0RL-Xe-8VO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="dlf-FN-QRW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0RL-Xe-8VO" secondAttribute="bottom" id="flO-hD-A1i"/>
+                            <constraint firstItem="8hY-7h-UTM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="iBS-4P-6Qa"/>
                             <constraint firstItem="0RL-Xe-8VO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xFA-SE-mHy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rGs-RX-ssO"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="8hY-7h-UTM" id="Ihr-vH-Sur"/>
                         <outlet property="vkWebView" destination="0RL-Xe-8VO" id="URg-rP-Bzx"/>
                     </connections>
                 </viewController>

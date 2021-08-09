@@ -9,12 +9,16 @@ import UIKit
 import WebKit
 
 class ViewController: UIViewController, WKNavigationDelegate {
-    @IBOutlet weak var vkWebView: WKWebView! {
+    @IBOutlet weak var vkWebView: WKWebView? {
         didSet{
-            vkWebView.navigationDelegate = self
+            vkWebView?.navigationDelegate = self
         }
     }
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    let application = UIApplication.shared
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -37,8 +41,26 @@ class ViewController: UIViewController, WKNavigationDelegate {
             URLQueryItem(name: "v", value: "5.68")
         ]
         let request = URLRequest(url: URLComponents.url!)
-        vkWebView.load(request)
-        
+        vkWebView?.load(request)
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        isIndicatorWork(isAnimated: true, indicator: activityIndicator)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        isIndicatorWork(isAnimated: false, indicator: activityIndicator)
+    }
+    
+    func isIndicatorWork(isAnimated: Bool, indicator: UIActivityIndicatorView) {
+        application.isNetworkActivityIndicatorVisible = isAnimated
+        if isAnimated {
+            activityIndicator.startAnimating()
+            activityIndicator.isHidden = false
+        } else {
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
@@ -63,16 +85,16 @@ class ViewController: UIViewController, WKNavigationDelegate {
             let groupsQueryItems = ["extended": "1"]
             let sortedGroupsQueryItems = ["extended": "1", "filter": "admin"]
             
-            print(requests(token: token,
+            print(vkAPIrequests(token: token,
                                   method: "friends.get",
                                   queryItems: friendsQueryItems))
-            print(requests(token: token,
+            print(vkAPIrequests(token: token,
                                   method: "photos.getAll",
                                   queryItems: photoQueryItems))
-            print(requests(token: token,
+            print(vkAPIrequests(token: token,
                                   method: "groups.get",
                                   queryItems: groupsQueryItems))
-            print(requests(token: token,
+            print(vkAPIrequests(token: token,
                                   method: "groups.get",
                                   queryItems: sortedGroupsQueryItems))
         }
@@ -81,7 +103,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         return
     }
     
-    func requests(token: String, method: String, queryItems: [String: String]) {
+    func vkAPIrequests(token: String, method: String, queryItems: [String: String]) {
         var URLComponents = URLComponents()
         URLComponents.scheme = "https"
         URLComponents.host = "api.vk.com"

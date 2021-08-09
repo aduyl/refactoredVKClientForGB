@@ -11,7 +11,7 @@ class Session {
     
     private init() {}
     
-    var fio: String = ""
+    var fio: String = String()
     var userID: Int = 0
-    var token = ""
+    var token = String()
 }
