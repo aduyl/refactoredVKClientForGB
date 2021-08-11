@@ -9,9 +9,9 @@ import UIKit
 
 class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var array: [UIImage]
-    let user: tableCellData
+    let user: Users
     private var myCollectionView: UICollectionView?
-    init(user: tableCellData){
+    init(user: Users){
         self.user = user
         self.array = user.usersPhotos!
         super.init(nibName: nil, bundle: nil)

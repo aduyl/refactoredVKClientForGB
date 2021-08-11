@@ -1,22 +1,21 @@
 //
-//  UniversalTableController.swift
+//  FriendsController.swift
 //  refactoredVKclient
 //
-//  Created by mac on 20.07.2021.
+//  Created by mac on 12.07.2021.
 //
 
 import UIKit
+import Foundation
 
-
-class UniversalTableController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
+class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
     let usersTableView = UITableView()
-    var dataArray = [HeaderSection]()
-    let configureWithNavigation: Bool
+    var dataArray: [UsersHeaderSection]
     var searchBar = UISearchBar()
     // MARK: initialization
     
-    init(configureWithNavigation: Bool){
-        self.configureWithNavigation = configureWithNavigation
+    init(){
+        self.dataArray = []
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -26,7 +25,8 @@ class UniversalTableController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI(configure: configureWithNavigation)
+        configureSearchBar()
+        configureTableView()
         getDataArray()
         searchBar.delegate = self
         
@@ -35,32 +35,13 @@ class UniversalTableController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: setup ui
     func getDataArray() { }
     
-    func configureUI(configure: Bool) {
-        if configure {
-            configureNavigation()
-            configureTableView()
-        }else{
-            configureSearchBar()
-            configureTableView()
-        }
-    }
-    
     func configureTableView(){
         self.view.backgroundColor = .white
         usersTableView.dataSource = self
         usersTableView.delegate = self
         view.addSubview(usersTableView)
         usersTableView.frame = CGRect(x: 0, y: 74, width: view.bounds.width, height: view.bounds.height - 74)
-        usersTableView.register(UniversalTableViewCell.self, forCellReuseIdentifier: "groupCell")
-    }
-    
-    func configureNavigation() {
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 30, width: CGFloat(Double(self.view.frame.width) * 0.9), height: 44))
-        view.addSubview(searchBar)
-        let navButton = UIButton(frame: CGRect(x: CGFloat(Double(self.view.frame.width) * 0.9), y:30, width: CGFloat(Double(self.view.frame.width) * 0.1), height: 44))
-        navButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        navButton.addTarget(nil, action: #selector(pushNvigationButton), for: .touchUpInside)
-        view.addSubview(navButton)
+        usersTableView.register(FriendsTableViewCell.self, forCellReuseIdentifier: "userCell")
     }
     
     func configureSearchBar() {
@@ -71,11 +52,7 @@ class UniversalTableController: UIViewController, UITableViewDelegate, UITableVi
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
     {
     }
-    
-    @objc func pushNvigationButton(){
-        
-    }
-    
+
     //MARK: uitableview functions
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataArray.count
@@ -87,8 +64,8 @@ class UniversalTableController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! UniversalTableViewCell
-        cell.group = dataArray[indexPath.section].tableCell[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! FriendsTableViewCell
+        cell.friend = dataArray[indexPath.section].tableCell[indexPath.row]
         return cell
     }
     
@@ -105,14 +82,5 @@ class UniversalTableController: UIViewController, UITableViewDelegate, UITableVi
         return indexPath
     }
     
-    func separateCellsAndHeaderSections(array: [HeaderSection]) -> [tableCellData]{
-        var tableCellArray: [tableCellData] = []
-        for item in array {
-            for tableCell in item.tableCell {
-                tableCellArray.append(tableCell)
-            }
-        }
-        return tableCellArray
-    }
 }
 

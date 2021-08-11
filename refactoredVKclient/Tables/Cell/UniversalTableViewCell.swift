@@ -2,25 +2,12 @@
 //  UniversalTableViewCell.swift
 //  refactoredVKclient
 //
-//  Created by mac on 11.07.2021.
+//  Created by mac on 10.08.2021.
 //
 
+import Foundation
 import UIKit
-
 class UniversalTableViewCell: UITableViewCell {
-    var group: tableCellData? {
-        didSet{
-            guard let groupItem = group else {return}
-            if let name = groupItem.name{
-                avatarImageView.image = UIImage(named: name)
-                nameLabel.text = name
-            }
-            if let groupDescription = groupItem.itemProreties{
-                propertyLabel.text = "\(groupDescription)"
-            }
-        }
-    }
-    var saveGroup: tableCellData?
     let avatarImageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -47,18 +34,6 @@ class UniversalTableViewCell: UITableViewCell {
         view.clipsToBounds = true
         return view
     }()
-    
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        saveGroup = group
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureUI()
-        addGestureRecognizerToAvatarImage()
-    }
-    
-     required init?(coder aDecoder: NSCoder) {
-       super.init(coder: aDecoder)
-    }
     
     func addGestureRecognizerToAvatarImage() {
         let recognaizer = UITapGestureRecognizer(target: self, action: #selector(imageHasBeenTapped))
