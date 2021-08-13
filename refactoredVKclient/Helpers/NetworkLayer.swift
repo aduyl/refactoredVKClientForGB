@@ -6,45 +6,78 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 // MARK: - NetworkLayerProtocol
 
-protocol NetworkLayerProtocol: AnyObject {
-    func fetchPosts(complition: @escaping(Result<[Users], Error>) -> Void)
-    func fetchComments(complition: @escaping(Result<[Groups], Error>) -> Void)
-}
 
 // MARK: - NetworkLayer
-
-final class NetworkLayer: NetworkLayerProtocol {
-    // MARK: - Public methods
-    func fetchPosts(complition: @escaping (Result<[Users], Error>) -> Void) {
-        
-    }
-    
-    func fetchComments(complition: @escaping (Result<[Groups], Error>) -> Void) {
-        
-    }
-    // MARK: - Private methods
-    private func downloadJson<T: Decodable>(url: String, completion: @escaping(Result<[T], Error>) -> Void) {
-
-        guard let url = URL(string: url) else { return }
-
-        let session = URLSession.shared
-
-        session.dataTask(with: url) { data, response, eror in
-            if let error = eror {
-                completion(.failure(error))
-            }
-
-            if let data = data {
-                do {
-                    let json = try JSONDecoder().decode([T].self, from: data)
-                    completion(.success(json))
-                } catch {
-                    completion(.failure(error))
+final class NetworkLayer{
+    private let scheme = "https://"
+    private let host = "api.vk.com"
+    func forecastUsers(token: String = Session.instance.token, complition: @escaping(Result<[Users], Error>) -> Void) {
+        let path = "/method/friends.get"
+        let parameters: Parameters = [
+            "access_token": token,
+            "fields": "bdate,photo_100",
+            "v": "5.131"
+        ]
+            AF.request(scheme + host + path, method: .get, parameters: parameters).response{ response in
+                switch response.result {
+                case .failure(let error):
+                    complition(.failure(error))
+                case .success(let data):
+                    guard let data = data, let json = try? JSON(data: data) else { return }
+                    
+                    let forecastJSON = json["response"]["items"].arrayValue
+                    let forecast = forecastJSON.map{ Users(json: $0)}
+                    complition(.success(forecast))
                 }
             }
-        }.resume()
     }
+    
+    func forecastGroups(token: String = Session.instance.token, complition: @escaping(Result<[Groups], Error>) -> Void) {
+        let path = "/method/groups.get"
+        let parameters: Parameters = [
+            "access_token": token,
+            "extended": "1",
+            "fields": "photo_100,description,name,id",
+            "v": "5.131"
+        ]
+            AF.request(scheme + host + path, method: .get, parameters: parameters).response{ response in
+                switch response.result {
+                case .failure(let error):
+                    complition(.failure(error))
+                case .success(let data):
+                    guard let data = data, let json = try? JSON(data: data) else { return }
+
+                    let forecastJSON = json["response"]["items"].arrayValue
+                    let forecast = forecastJSON.map{ Groups(json: $0)}
+                    complition(.success(forecast))
+                }
+            }
+    }
+    func forecastPhotos(ownerId: Int, token: String = Session.instance.token, complition: @escaping(Result<[PostPhoto], Error>) -> Void) {
+        let path = "/method/photos.getAll"
+        let parameters: Parameters = [
+            "access_token": token,
+            "owner_id": "\(String(ownerId))",
+            "extended": "1",
+            "v": "5.131"
+        ]
+            AF.request(scheme + host + path, method: .get, parameters: parameters).response{ response in
+                switch response.result {
+                case .failure(let error):
+                    complition(.failure(error))
+                case .success(let data):
+                    guard let data = data, let json = try? JSON(data: data) else { return }
+
+                    let forecastJSON = json["response"]["items"].arrayValue
+                    let forecast = forecastJSON.map{ PostPhoto(json: $0)}
+                    complition(.success(forecast))
+                }
+            }
+    }
+    
 }

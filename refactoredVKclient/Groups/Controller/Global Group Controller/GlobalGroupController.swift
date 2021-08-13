@@ -13,14 +13,14 @@ protocol DataDelegate: AnyObject {
 }
 
 class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
+    var network = NetworkLayer()
     var sentElement: Groups?
     let usersTableView = UITableView()
-    var dataArray: [GroupsHeaderSection]
+    var dataArray = [GroupsHeaderSection]()
     var searchBar = UISearchBar()
     weak var delegate: DataDelegate?
     
     init() {
-        self.dataArray = []
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -31,6 +31,15 @@ class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         configureNavigation()
         configureTableView()
+        network.forecastGroups { result in
+            switch result {
+            case .failure(let error) :
+                print(error)
+            case .success(let data) :
+                self.dataArray = sortByName(groupsArray: data)
+                self.usersTableView.reloadData()
+            }
+        }
     }
     
     func configureTableView(){
@@ -57,7 +66,7 @@ class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section = self.dataArray[section]
-        return section.tableCell.count
+        return  section.tableCell.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,16 +84,8 @@ class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewD
         return 100
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        dataArray[indexPath.section].tableCell.remove(at: indexPath.row)
-        if dataArray[indexPath.section].tableCell.count == 0 {
-            dataArray.remove(at: indexPath.section)
-        }
-        self.usersTableView.reloadData()
-    }
-    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?{
-        sentElement = dataArray[indexPath.section].tableCell[indexPath.row]
+        sentElement =  dataArray[indexPath.section].tableCell[indexPath.row]
         navigationController?.popViewController(animated: true)
         getGroupFromGlobal(sentElement!)
         return indexPath

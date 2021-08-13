@@ -8,10 +8,8 @@
 import UIKit
 
 class FriendPhotosViewCell: UICollectionViewCell {
-    var user: Users?
     static let identifier = "FriendPhotosViewCell"
     private var isLiked = true
-    var index: Int = 0
     var likeCount = 0
     var avatar: UIImageView = {
         let img = UIImageView()
@@ -65,14 +63,14 @@ class FriendPhotosViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    public func configure(user: Users, index: Int) {
-        self.index = index
-        self.user = user
-        avatar.image = UIImage(named: user.name)
-        userName.text = user.name
-        let name: String = String(user.name + String(index))
-        userPhoto.image = UIImage(named: name)
+    func configure(userName: String, avatar: String, photo: PostPhoto) {
+        let imgURL = URL(string: avatar)
+        self.avatar.kf.setImage(with: imgURL)
+        self.userName.text = userName
+        let photoURL = URL(string: photo.photo)
+        self.userPhoto.kf.setImage(with: photoURL)
         userPhoto.isUserInteractionEnabled = true
+        likeCount = photo.likes
         likeLabel.text = "\(likeCount) likes"
         likeButton.addTarget(self, action: #selector(didPressLikeButton), for: .touchUpInside)
         

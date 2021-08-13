@@ -19,7 +19,7 @@ struct GroupsHeaderSection {
 
     
 func sortByName(usersArray: [Users]) -> [UsersHeaderSection] {
-    let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЭЮЯ"
+    let str = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var sortedArray = [Users]()
     var mainSortedArray = [UsersHeaderSection]()
     
@@ -29,7 +29,7 @@ func sortByName(usersArray: [Users]) -> [UsersHeaderSection] {
         let letter = str[index]
         for j : Int in 0 ..< usersArray.count {
               let name = usersArray[j]
-            let upperName = name.name.uppercased()
+            let upperName = name.lastName.uppercased()
             if upperName.first == letter {
                   sortedArray.append(name)
               }
@@ -44,7 +44,7 @@ func sortByName(usersArray: [Users]) -> [UsersHeaderSection] {
 }
 
 func sortByName(groupsArray: [Groups]) -> [GroupsHeaderSection] {
-    let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЭЮЯ"
+    let str = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var sortedArray = [Groups]()
     var mainSortedArray = [GroupsHeaderSection]()
     
@@ -54,8 +54,8 @@ func sortByName(groupsArray: [Groups]) -> [GroupsHeaderSection] {
         let letter = str[index]
         for j : Int in 0 ..< groupsArray.count {
             let name = groupsArray[j]
-            let upperName = name.name?.uppercased()
-            if upperName?.first == letter {
+            let upperName = name.name.uppercased()
+            if upperName.first == letter {
                 sortedArray.append(name)
               }
           }

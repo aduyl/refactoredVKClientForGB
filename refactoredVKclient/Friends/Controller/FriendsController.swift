@@ -10,12 +10,13 @@ import Foundation
 
 class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
     let usersTableView = UITableView()
-    var dataArray: [UsersHeaderSection]
+    var dataArray = [UsersHeaderSection]()
+    var array = [PostPhoto]()
     var searchBar = UISearchBar()
+    var network = NetworkLayer()
     // MARK: initialization
     
     init(){
-        self.dataArray = []
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,14 +28,19 @@ class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataS
         super.viewDidLoad()
         configureSearchBar()
         configureTableView()
-        getDataArray()
         searchBar.delegate = self
-        
+        network.forecastUsers { result in
+            switch result {
+            case .failure(let error) :
+                print(error)
+            case .success(let data) :
+                self.dataArray = sortByName(usersArray: data)
+                self.usersTableView.reloadData()
+            }
+        }
     }
     
     // MARK: setup ui
-    func getDataArray() { }
-    
     func configureTableView(){
         self.view.backgroundColor = .white
         usersTableView.dataSource = self
@@ -49,6 +55,7 @@ class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataS
         view.addSubview(searchBar)
     }
     
+    // TODO
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
     {
     }
@@ -65,7 +72,7 @@ class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! FriendsTableViewCell
-        cell.friend = dataArray[indexPath.section].tableCell[indexPath.row]
+        cell.configure(friend: dataArray[indexPath.section].tableCell[indexPath.row])
         return cell
     }
     
@@ -79,6 +86,9 @@ class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?{
+        let user = dataArray[indexPath.section].tableCell[indexPath.row]
+        let friendPhotoFeed = FriendPhotoFeedController(user: user)
+        navigationController?.pushViewController(friendPhotoFeed, animated: true)
         return indexPath
     }
     

@@ -6,15 +6,20 @@
 //
 
 import Foundation
-import UIKit
+import SwiftyJSON
 
-struct Users {
-    // user avatar
-    var avatar: UIImage
-    // user name
-    var name: String
-    // uer age
-    var age: String
-    //user photos
-    var usersPhotos: [UIImage]?
+struct Users: Codable {
+    let bdate: String?
+    let firstName: String
+    let lastName: String
+    let photo100: String
+    let id: Int
+    
+    init(json: SwiftyJSON.JSON) {
+        self.id = json["id"].intValue
+        self.bdate = json["bdate"].stringValue
+        self.firstName = json["first_name"].stringValue
+        self.lastName = json["last_name"].stringValue
+        self.photo100 = json["photo_100"].stringValue
+    }
 }

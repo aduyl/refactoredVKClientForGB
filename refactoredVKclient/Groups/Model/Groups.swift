@@ -6,13 +6,19 @@
 //
 
 import Foundation
-import UIKit
+import SwiftyJSON
 
-struct Groups {
+struct Groups: Codable {
     // group picture
-    var avatar: UIImage?
+    var avatar: String
     // group name
-    var name: String?
+    var name: String
     // group description
-    var description: String?
+    var description: String
+    init(json: SwiftyJSON.JSON) {
+        self.avatar = json["photo_100"].stringValue
+        self.name = json["name"].stringValue
+        self.description = json["description"].stringValue
+    }
+    
 }

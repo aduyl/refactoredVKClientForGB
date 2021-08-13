@@ -20,6 +20,10 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
+        configure()
+    }
+    
+    func configure() {
         vkWebView.navigationDelegate = self
         vkWebView.uiDelegate = self
         self.view.addSubview(vkWebView)

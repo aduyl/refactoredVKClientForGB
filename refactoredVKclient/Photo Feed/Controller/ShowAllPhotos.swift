@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ShowAllPhotos: ViewController, UIScrollViewDelegate {
-    let photoArray: [UIImage]?
+    let photoArray: [PostPhoto]?
     var photoView = UIView()
     var scrollView: UIScrollView!
-    init(photoArray: [UIImage]) {
+    init(photoArray: [PostPhoto]) {
         self.photoArray = photoArray
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,14 +28,16 @@ class ShowAllPhotos: ViewController, UIScrollViewDelegate {
         self.scrollView.contentSize = CGSize(width: photoView.frame.width, height: view.frame.height)
         self.scrollView.addSubview(photoView)
         view.addSubview(scrollView)
-        cinfigureUI(array: photoArray!)
+        if let arr = photoArray {
+            cinfigureUI(array: arr)
+        }
         configureNavigation()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
     }
-    func cinfigureUI(array: [UIImage]) {
+    func cinfigureUI(array: [PostPhoto]) {
         var count: Int = 0
         for item in array {
             let userPhoto: UIImageView = {
@@ -43,7 +46,8 @@ class ShowAllPhotos: ViewController, UIScrollViewDelegate {
                 img.clipsToBounds = true
                 return img
             }()
-            userPhoto.image = item
+            let imgURL = URL(string: item.photo)
+            userPhoto.kf.setImage(with: imgURL)
             userPhoto.frame = CGRect(x: view.bounds.width * CGFloat(count), y: 0 , width: view.bounds.width, height: photoView.bounds.height)
             self.photoView.addSubview(userPhoto)
             count += 1

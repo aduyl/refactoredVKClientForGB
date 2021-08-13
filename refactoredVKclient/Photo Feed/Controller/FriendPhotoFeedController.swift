@@ -8,23 +8,40 @@
 import UIKit
 
 class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    var array: [UIImage]
-    let user: Users
+    var array = [PostPhoto]()
+    var user: Users
+    var network = NetworkLayer()
     private var myCollectionView: UICollectionView?
+    
     init(user: Users){
         self.user = user
-        self.array = user.usersPhotos!
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configure()
+        network.forecastPhotos(ownerId: user.id, token: Session.instance.token) {
+                    result in
+                        switch result {
+                        case .failure(let error) :
+                            print(error)
+                        case .success(let data) :
+                            self.array = data
+                            self.myCollectionView?.reloadData()
+                        }
+        }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+
+    func configure() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.width , height: view.frame.height * 2 / 3)
@@ -44,9 +61,8 @@ class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, U
         navButton.layer.cornerRadius = navButton.layer.frame.height / 2
         navButton.backgroundColor = UIColor(red: 153/255, green: 204/255, blue: 255/255, alpha: 0.1)
         view.addSubview(navButton)
-        
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
@@ -55,7 +71,7 @@ class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, U
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendPhotosViewCell.identifier, for: indexPath) as! FriendPhotosViewCell
-        cell.configure(user: user, index: indexPath.section + 1)
+        cell.configure(userName: user.firstName + " " + user.lastName, avatar: user.photo100, photo: array[indexPath.section])
         let recognaizer = UITapGestureRecognizer(target: self, action: #selector(imageHasBeenTapped))
         cell.userPhoto.addGestureRecognizer(recognaizer)
         return cell
