@@ -64,6 +64,7 @@ final class GroupTableViewCell: UITableViewCell {
         containerView.frame = CGRect(x: 100, y: 0, width: self.contentView.frame.width - 100, height: self.contentView.frame.height)
         nameLabel.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width - 100, height: self.contentView.frame.height / 2)
         propertyLabel.frame = CGRect(x: 0, y: self.contentView.frame.height / 2, width: self.contentView.frame.width - 100, height: self.contentView.frame.height / 2)
+        addGestureRecognizerToAvatarImage()
     }
     
     private func addGestureRecognizerToAvatarImage() {
