@@ -7,13 +7,14 @@
 
 import UIKit
 
-class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    var array = [PostPhoto]()
-    var user: Users
+final class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    var postPhotos = [PostPhoto]()
+    var user: User
     var network = NetworkLayer()
     private var myCollectionView: UICollectionView?
     
-    init(user: Users){
+    // MARK: - initialization
+    init(user: User){
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
@@ -25,23 +26,26 @@ class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        getData()
+    }
+    
+    // MARK: - json parsing
+    func getData() {
         network.forecastPhotos(ownerId: user.id, token: Session.instance.token) {
-                    result in
+            [weak self] result in
+            guard let self = self else { return }
                         switch result {
                         case .failure(let error) :
-                            print(error)
+                            self.showAlert(alertText: "\(error)")
                         case .success(let data) :
-                            self.array = data
+                            self.postPhotos = data
                             self.myCollectionView?.reloadData()
                         }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
 
-    func configure() {
+    // MARK: - Configure UI
+    private func configure() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.width , height: view.frame.height * 2 / 3)
@@ -63,25 +67,39 @@ class FriendPhotoFeedController: UIViewController, UICollectionViewDataSource, U
         view.addSubview(navButton)
     }
     
+    // MARK: - Error alert
+    func showAlert(alertText: String) {
+        let alertController = UIAlertController(title: "Error", message: alertText, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(okButton)
+        present(alertController, animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Configure CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return array.count
+        return postPhotos.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendPhotosViewCell.identifier, for: indexPath) as! FriendPhotosViewCell
-        cell.configure(userName: user.firstName + " " + user.lastName, avatar: user.photo100, photo: array[indexPath.section])
+        cell.configure(userName: "\(user.firstName) \(user.lastName)", avatar: user.photo100, photo: postPhotos[indexPath.section])
         let recognaizer = UITapGestureRecognizer(target: self, action: #selector(imageHasBeenTapped))
         cell.userPhoto.addGestureRecognizer(recognaizer)
         return cell
     }
     
-    @objc func pushNvigationButton(){
+    //MARK: - Processing buttons clicks
+    @objc private func pushNvigationButton(){
         navigationController?.popViewController(animated: true)
     }
-    @objc func imageHasBeenTapped(){
-        let newContr = ShowAllPhotos(photoArray: array)
+    
+    @objc private func imageHasBeenTapped(){
+        let newContr = ShowAllPhotos(photo: postPhotos)
         navigationController?.pushViewController(newContr, animated: true)
     }
 }

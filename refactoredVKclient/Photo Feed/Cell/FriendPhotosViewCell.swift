@@ -11,45 +11,51 @@ class FriendPhotosViewCell: UICollectionViewCell {
     static let identifier = "FriendPhotosViewCell"
     private var isLiked = true
     var likeCount = 0
-    var avatar: UIImageView = {
+    lazy var avatar: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         img.layer.cornerRadius = img.layer.frame.height / 2
         return img
     }()
-    var userName: UILabel = {
+    
+    lazy var userName: UILabel = {
         let lable = UILabel()
         lable.font = UIFont.boldSystemFont(ofSize: 20)
         lable.translatesAutoresizingMaskIntoConstraints = false
         return lable
     }()
-    var userPhoto: UIImageView = {
+    
+    lazy var userPhoto: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFit
         img.clipsToBounds = true
         return img
     }()
-    var likeButton: UIButton = {
+    
+    lazy var likeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage.init(systemName: "heart"), for: .normal)
         button.tintColor = UIColor(red: 255/255, green: 102/255, blue: 133/255, alpha: 1)
         return button
     }()
-    var likeLabel: UILabel = {
+    
+    lazy var likeLabel: UILabel = {
         let lable = UILabel()
         lable.font = UIFont.boldSystemFont(ofSize: 17)
         lable.translatesAutoresizingMaskIntoConstraints = false
         lable.textColor = .gray
         return lable
     }()
-    let avatarContainer: UIView = {
+    
+    lazy var avatarContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
         return view
     }()
-    let likeContainer: UIView = {
+    
+    lazy var likeContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -60,9 +66,11 @@ class FriendPhotosViewCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.clipsToBounds = true
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func configure(userName: String, avatar: String, photo: PostPhoto) {
         let imgURL = URL(string: avatar)
         self.avatar.kf.setImage(with: imgURL)
@@ -75,6 +83,7 @@ class FriendPhotosViewCell: UICollectionViewCell {
         likeButton.addTarget(self, action: #selector(didPressLikeButton), for: .touchUpInside)
         
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         avatar.image = nil
@@ -83,6 +92,7 @@ class FriendPhotosViewCell: UICollectionViewCell {
         likeCount = 0
         likeLabel.text = nil
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.contentView.backgroundColor = .white
@@ -124,7 +134,8 @@ class FriendPhotosViewCell: UICollectionViewCell {
                                  width: 200,
                                  height: likeContainer.bounds.height * 0.9)
     }
-    @objc func didPressLikeButton(){
+    
+    @objc private func didPressLikeButton(){
         if isLiked{
             self.likeButton.setImage(UIImage.init(systemName: "heart.fill"), for: .normal)
             self.likeCount = likeCount + 1
@@ -139,5 +150,6 @@ class FriendPhotosViewCell: UICollectionViewCell {
                           })
         self.isLiked = !self.isLiked
     }
+    
 }
 

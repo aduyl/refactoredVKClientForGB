@@ -9,20 +9,22 @@ import UIKit
 import Foundation
 
 protocol DataDelegate: AnyObject {
-    func transferGroup(group: Groups)
+    func transferGroup(group: Group)
 }
 
-class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
+final class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
+    
     var network = NetworkLayer()
-    var sentElement: Groups?
-    let usersTableView = UITableView()
-    var dataArray = [GroupsHeaderSection]()
+    var sentElement: Group?
+    let tableView = UITableView()
+    var data = [GroupsHeaderSection]()
     var searchBar = UISearchBar()
     weak var delegate: DataDelegate?
     
     init() {
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -31,27 +33,34 @@ class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         configureNavigation()
         configureTableView()
-        network.forecastGroups { result in
+        getData()
+    }
+    
+    // MARK: - json parsing
+    func getData() {
+        network.forecastGroups {[weak self] result in
+            guard let self = self else { return }
             switch result {
             case .failure(let error) :
-                print(error)
+                self.showAlert(alertText: "\(error)")
             case .success(let data) :
-                self.dataArray = sortByName(groupsArray: data)
-                self.usersTableView.reloadData()
+                self.data = sortByName(groups: data)
+                self.tableView.reloadData()
             }
         }
     }
     
-    func configureTableView(){
+    //MARK: - Configure ui
+    private func configureTableView(){
         self.view.backgroundColor = .white
-        usersTableView.dataSource = self
-        usersTableView.delegate = self
-        view.addSubview(usersTableView)
-        usersTableView.frame = CGRect(x: 0, y: 74, width: view.bounds.width, height: view.bounds.height - 74)
-        usersTableView.register(GroupTableViewCell.self, forCellReuseIdentifier: "GroupCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.addSubview(tableView)
+        tableView.frame = CGRect(x: 0, y: 74, width: view.bounds.width, height: view.bounds.height - 74)
+        tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: "GroupCell")
     }
     
-    func configureNavigation() {
+    private func configureNavigation() {
         let searchBar = UISearchBar(frame: CGRect(x: CGFloat(Double(self.view.frame.width) * 0.1), y: 30, width: CGFloat(Double(self.view.frame.width) * 0.9), height: 44))
         view.addSubview(searchBar)
         let navButton = UIButton(frame: CGRect(x: 0, y:30, width: CGFloat(Double(self.view.frame.width) * 0.1), height: 44))
@@ -60,24 +69,34 @@ class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewD
         view.addSubview(navButton)
     }
     
+    // MARK: - Error alert
+    func showAlert(alertText: String) {
+        let alertController = UIAlertController(title: "Error", message: alertText, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(okButton)
+        present(alertController, animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Configure tableView
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataArray.count
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section = self.dataArray[section]
+        let section = self.data[section]
         return  section.tableCell.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupTableViewCell
-        cell.configure(group: dataArray[indexPath.section].tableCell[indexPath.row])
+        cell.configure(group: data[indexPath.section].tableCell[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection
                                 section: Int) -> String? {
-        return "\(dataArray[section].letter)"
+        return "\(data[section].letter)"
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -85,20 +104,20 @@ class GlobalGroupController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?{
-        sentElement =  dataArray[indexPath.section].tableCell[indexPath.row]
+        sentElement =  data[indexPath.section].tableCell[indexPath.row]
         navigationController?.popViewController(animated: true)
         getGroupFromGlobal(sentElement!)
         return indexPath
     }
     
-    @objc func pushNvigationButton(){
+    @objc private func pushNvigationButton(){
         navigationController?.popViewController(animated: true)
     }
 
 }
 
 extension GlobalGroupController {
-    func getGroupFromGlobal(_ group: Groups){
+    func getGroupFromGlobal(_ group: Group){
         delegate?.transferGroup(group: group)
     }
 }

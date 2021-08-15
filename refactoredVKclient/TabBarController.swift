@@ -7,11 +7,15 @@
 
 import UIKit
 
-class TabBarController: UITabBarController, UITabBarControllerDelegate {
+final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
+        configure()
+    }
+    
+    private func configure() {
         let groups = UsersGroupController()
         let frirnds = FriendsController()
             let groupIcon = UITabBarItem(title: "Group", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3"))
@@ -20,7 +24,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
             let friendsIcon = UITabBarItem(title: "Friends", image: UIImage(systemName: "person.2"), selectedImage: UIImage(systemName: "person.2"))
             frirnds.tabBarItem = friendsIcon
 
-            let controllers = [groups, frirnds]  
+            let controllers = [groups, frirnds]
             self.viewControllers = controllers
-        }
+    }
 }

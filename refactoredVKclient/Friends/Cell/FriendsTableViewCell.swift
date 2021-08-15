@@ -10,7 +10,8 @@ import UIKit
 import Kingfisher
 
 class FriendsTableViewCell: UITableViewCell {
-    let avatarImageView: UIImageView = {
+    
+    lazy var avatarImageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -18,19 +19,22 @@ class FriendsTableViewCell: UITableViewCell {
         img.clipsToBounds = true
      return img
      }()
-    let nameLabel:UILabel = {
+    
+    lazy var nameLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let propertyLabel:UILabel = {
+    
+    lazy var propertyLabel:UILabel = {
       let label = UILabel()
       label.font = UIFont.boldSystemFont(ofSize: 14)
       label.translatesAutoresizingMaskIntoConstraints = false
       return label
     }()
-    let containerView: UIView = {
+    
+    lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -47,14 +51,15 @@ class FriendsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(friend: Users) {
+    func configure(friend: User) {
         let imgURL = URL(string: friend.photo100)
         avatarImageView.kf.setImage(with: imgURL)
-        nameLabel.text = friend.firstName + " " + friend.lastName
+        nameLabel.text = "\(friend.firstName) \(friend.lastName)"
         propertyLabel.text = friend.bdate
     }
     
-    func configureUI() {
+    
+    private func configureUI() {
         self.contentView.addSubview(avatarImageView)
         containerView.addSubview(nameLabel)
         containerView.addSubview(propertyLabel)
@@ -65,13 +70,13 @@ class FriendsTableViewCell: UITableViewCell {
         propertyLabel.frame = CGRect(x: 0, y: self.contentView.frame.height / 2, width: self.contentView.frame.width - 100, height: self.contentView.frame.height / 2)
     }
     
-    func addGestureRecognizerToAvatarImage() {
+    private func addGestureRecognizerToAvatarImage() {
         let recognaizer = UITapGestureRecognizer(target: self, action: #selector(imageHasBeenTapped))
         self.avatarImageView.isUserInteractionEnabled = true
         self.avatarImageView.addGestureRecognizer(recognaizer)
     }
     
-    @objc func imageHasBeenTapped() {
+    @objc private func imageHasBeenTapped() {
         let sizeWidth = self.avatarImageView.frame.width
         let sizeHeigth = self.avatarImageView.frame.height
         UIView.animate(withDuration: 0.5,
@@ -91,5 +96,6 @@ class FriendsTableViewCell: UITableViewCell {
                         self.avatarImageView.frame = CGRect(x: 0, y: 5, width: sizeWidth, height: sizeHeigth)
                        })
     }
+    
 }
 

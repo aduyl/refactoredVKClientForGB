@@ -16,7 +16,7 @@ import SwiftyJSON
 final class NetworkLayer{
     private let scheme = "https://"
     private let host = "api.vk.com"
-    func forecastUsers(token: String = Session.instance.token, complition: @escaping(Result<[Users], Error>) -> Void) {
+    func forecastUsers(token: String = Session.instance.token, complition: @escaping(Result<[User], Error>) -> Void) {
         let path = "/method/friends.get"
         let parameters: Parameters = [
             "access_token": token,
@@ -31,13 +31,13 @@ final class NetworkLayer{
                     guard let data = data, let json = try? JSON(data: data) else { return }
                     
                     let forecastJSON = json["response"]["items"].arrayValue
-                    let forecast = forecastJSON.map{ Users(json: $0)}
+                    let forecast = forecastJSON.map{ User(json: $0)}
                     complition(.success(forecast))
                 }
             }
     }
     
-    func forecastGroups(token: String = Session.instance.token, complition: @escaping(Result<[Groups], Error>) -> Void) {
+    func forecastGroups(token: String = Session.instance.token, complition: @escaping(Result<[Group], Error>) -> Void) {
         let path = "/method/groups.get"
         let parameters: Parameters = [
             "access_token": token,
@@ -53,11 +53,12 @@ final class NetworkLayer{
                     guard let data = data, let json = try? JSON(data: data) else { return }
 
                     let forecastJSON = json["response"]["items"].arrayValue
-                    let forecast = forecastJSON.map{ Groups(json: $0)}
+                    let forecast = forecastJSON.map{ Group(json: $0)}
                     complition(.success(forecast))
                 }
             }
     }
+    
     func forecastPhotos(ownerId: Int, token: String = Session.instance.token, complition: @escaping(Result<[PostPhoto], Error>) -> Void) {
         let path = "/method/photos.getAll"
         let parameters: Parameters = [
@@ -74,6 +75,7 @@ final class NetworkLayer{
                     guard let data = data, let json = try? JSON(data: data) else { return }
 
                     let forecastJSON = json["response"]["items"].arrayValue
+                    //let json = try JSONDecoder().decode([T].self, from: forecastJSON)
                     let forecast = forecastJSON.map{ PostPhoto(json: $0)}
                     complition(.success(forecast))
                 }

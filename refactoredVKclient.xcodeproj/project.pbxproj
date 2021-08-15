@@ -22,8 +22,8 @@
 		0407F90A26B32E06004C8BF9 /* FriendPhotosViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407F90926B32E06004C8BF9 /* FriendPhotosViewCell.swift */; };
 		0444868326A18A7100A011A4 /* UsersGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0444868226A18A7100A011A4 /* UsersGroupController.swift */; };
 		0450E6CE26BBE8FC00638ADC /* ShowAllPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0450E6CD26BBE8FC00638ADC /* ShowAllPhotos.swift */; };
-		0490A05026C28BEB005ABC44 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A04F26C28BEB005ABC44 /* Users.swift */; };
-		0490A05226C28BF8005ABC44 /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A05126C28BF8005ABC44 /* Groups.swift */; };
+		0490A05026C28BEB005ABC44 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A04F26C28BEB005ABC44 /* User.swift */; };
+		0490A05226C28BF8005ABC44 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A05126C28BF8005ABC44 /* Group.swift */; };
 		0490A05426C28D1C005ABC44 /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A05326C28D1C005ABC44 /* FriendsTableViewCell.swift */; };
 		0490A06326C2961B005ABC44 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A06226C2961B005ABC44 /* Request.swift */; };
 		0490A06726C29AB9005ABC44 /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A06626C29AB9005ABC44 /* NetworkLayer.swift */; };
@@ -32,6 +32,7 @@
 		0490A09A26C43F99005ABC44 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0490A09926C43F99005ABC44 /* Kingfisher */; };
 		0490A0AB26C5188B005ABC44 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 0490A0AA26C5188B005ABC44 /* SwiftyJSON */; };
 		0490A0B126C53A0D005ABC44 /* PostPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490A0B026C53A0D005ABC44 /* PostPhoto.swift */; };
+		615FE755F75B7D4BA0763953 /* Pods_refactoredVKclient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC80A7C8129F0D7BF4EF38B0 /* Pods_refactoredVKclient.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,13 +53,16 @@
 		0407F90926B32E06004C8BF9 /* FriendPhotosViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPhotosViewCell.swift; sourceTree = "<group>"; };
 		0444868226A18A7100A011A4 /* UsersGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersGroupController.swift; sourceTree = "<group>"; };
 		0450E6CD26BBE8FC00638ADC /* ShowAllPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllPhotos.swift; sourceTree = "<group>"; };
-		0490A04F26C28BEB005ABC44 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
-		0490A05126C28BF8005ABC44 /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
+		0490A04F26C28BEB005ABC44 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0490A05126C28BF8005ABC44 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		0490A05326C28D1C005ABC44 /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
 		0490A06226C2961B005ABC44 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		0490A06626C29AB9005ABC44 /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkLayer.swift; path = refactoredVKclient/Helpers/NetworkLayer.swift; sourceTree = SOURCE_ROOT; };
 		0490A06926C29C82005ABC44 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		0490A0B026C53A0D005ABC44 /* PostPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhoto.swift; sourceTree = "<group>"; };
+		2AB43EDDBCCA6B86DD4E4680 /* Pods-refactoredVKclient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-refactoredVKclient.debug.xcconfig"; path = "Target Support Files/Pods-refactoredVKclient/Pods-refactoredVKclient.debug.xcconfig"; sourceTree = "<group>"; };
+		CC80A7C8129F0D7BF4EF38B0 /* Pods_refactoredVKclient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_refactoredVKclient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC16C6D03F67F9218B2058F1 /* Pods-refactoredVKclient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-refactoredVKclient.release.xcconfig"; path = "Target Support Files/Pods-refactoredVKclient/Pods-refactoredVKclient.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,7 @@
 				0490A0AB26C5188B005ABC44 /* SwiftyJSON in Frameworks */,
 				0490A09A26C43F99005ABC44 /* Kingfisher in Frameworks */,
 				0490A09726C43F2C005ABC44 /* Alamofire in Frameworks */,
+				615FE755F75B7D4BA0763953 /* Pods_refactoredVKclient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +85,8 @@
 			children = (
 				0403F3D2269A074B00E2CDBB /* refactoredVKclient */,
 				0403F3D1269A074B00E2CDBB /* Products */,
+				4E7F13C7060B0382265D1451 /* Pods */,
+				16E88371FB2CD0542035BF75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,7 +189,7 @@
 		0490A05926C292FD005ABC44 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0490A04F26C28BEB005ABC44 /* Users.swift */,
+				0490A04F26C28BEB005ABC44 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -208,7 +215,7 @@
 		0490A05C26C29332005ABC44 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0490A05126C28BF8005ABC44 /* Groups.swift */,
+				0490A05126C28BF8005ABC44 /* Group.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -289,6 +296,23 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		16E88371FB2CD0542035BF75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CC80A7C8129F0D7BF4EF38B0 /* Pods_refactoredVKclient.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E7F13C7060B0382265D1451 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2AB43EDDBCCA6B86DD4E4680 /* Pods-refactoredVKclient.debug.xcconfig */,
+				FC16C6D03F67F9218B2058F1 /* Pods-refactoredVKclient.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -296,9 +320,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0403F3E4269A075200E2CDBB /* Build configuration list for PBXNativeTarget "refactoredVKclient" */;
 			buildPhases = (
+				C0241A25AB672ADA6851BD28 /* [CP] Check Pods Manifest.lock */,
 				0403F3CC269A074B00E2CDBB /* Sources */,
 				0403F3CD269A074B00E2CDBB /* Frameworks */,
 				0403F3CE269A074B00E2CDBB /* Resources */,
+				2D7B0A44D010AD9FA9F8BC9F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -363,6 +389,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2D7B0A44D010AD9FA9F8BC9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-refactoredVKclient/Pods-refactoredVKclient-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-refactoredVKclient/Pods-refactoredVKclient-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-refactoredVKclient/Pods-refactoredVKclient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0241A25AB672ADA6851BD28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-refactoredVKclient-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0403F3CC269A074B00E2CDBB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -378,7 +446,7 @@
 				0407F90426B2AD1E004C8BF9 /* GlobalGroupController.swift in Sources */,
 				0403F3F5269AF21500E2CDBB /* TableCellDataAPI.swift in Sources */,
 				0490A06726C29AB9005ABC44 /* NetworkLayer.swift in Sources */,
-				0490A05026C28BEB005ABC44 /* Users.swift in Sources */,
+				0490A05026C28BEB005ABC44 /* User.swift in Sources */,
 				0490A06A26C29C82005ABC44 /* URLs.swift in Sources */,
 				0490A05426C28D1C005ABC44 /* FriendsTableViewCell.swift in Sources */,
 				0444868326A18A7100A011A4 /* UsersGroupController.swift in Sources */,
@@ -387,7 +455,7 @@
 				0403F3D4269A074B00E2CDBB /* AppDelegate.swift in Sources */,
 				0403F3D6269A074B00E2CDBB /* SceneDelegate.swift in Sources */,
 				0490A06326C2961B005ABC44 /* Request.swift in Sources */,
-				0490A05226C28BF8005ABC44 /* Groups.swift in Sources */,
+				0490A05226C28BF8005ABC44 /* Group.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,6 +591,7 @@
 		};
 		0403F3E5269A075200E2CDBB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2AB43EDDBCCA6B86DD4E4680 /* Pods-refactoredVKclient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -541,6 +610,7 @@
 		};
 		0403F3E6269A075200E2CDBB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC16C6D03F67F9218B2058F1 /* Pods-refactoredVKclient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

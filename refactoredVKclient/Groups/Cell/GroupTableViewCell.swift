@@ -7,8 +7,8 @@
 
 import UIKit
 
-class GroupTableViewCell: UITableViewCell {
-    let avatarImageView: UIImageView = {
+final class GroupTableViewCell: UITableViewCell {
+    lazy var avatarImageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -16,19 +16,22 @@ class GroupTableViewCell: UITableViewCell {
         img.clipsToBounds = true
      return img
      }()
-    let nameLabel:UILabel = {
+    
+    lazy var nameLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let propertyLabel:UILabel = {
+    
+    lazy var propertyLabel:UILabel = {
       let label = UILabel()
       label.font = UIFont.boldSystemFont(ofSize: 14)
       label.translatesAutoresizingMaskIntoConstraints = false
       return label
     }()
-    let containerView: UIView = {
+    
+    lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -45,14 +48,14 @@ class GroupTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(group: Groups) {
+    func configure(group: Group) {
         let imgURL = URL(string: group.avatar)
         avatarImageView.kf.setImage(with: imgURL)
         nameLabel.text = group.name
-        propertyLabel.text = group.description
+        propertyLabel.text = group.groupDescription
     }
     
-    func configureUI() {
+    private func configureUI() {
         self.contentView.addSubview(avatarImageView)
         containerView.addSubview(nameLabel)
         containerView.addSubview(propertyLabel)
@@ -63,13 +66,13 @@ class GroupTableViewCell: UITableViewCell {
         propertyLabel.frame = CGRect(x: 0, y: self.contentView.frame.height / 2, width: self.contentView.frame.width - 100, height: self.contentView.frame.height / 2)
     }
     
-    func addGestureRecognizerToAvatarImage() {
+    private func addGestureRecognizerToAvatarImage() {
         let recognaizer = UITapGestureRecognizer(target: self, action: #selector(imageHasBeenTapped))
         self.avatarImageView.isUserInteractionEnabled = true
         self.avatarImageView.addGestureRecognizer(recognaizer)
     }
     
-    @objc func imageHasBeenTapped() {
+    @objc private func imageHasBeenTapped() {
         let sizeWidth = self.avatarImageView.frame.width
         let sizeHeigth = self.avatarImageView.frame.height
         UIView.animate(withDuration: 0.5,

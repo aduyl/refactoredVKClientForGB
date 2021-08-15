@@ -7,16 +7,18 @@
 
 import UIKit
 
-class UsersGroupController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
-    let usersTableView = UITableView()
-    var dataArray: [GroupsHeaderSection]
+final class UsersGroupController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
+    
+    let tableView = UITableView()
+    var data: [GroupsHeaderSection]
     var searchBar = UISearchBar()
     // MARK: initialization
     
     init() {
-        self.dataArray = []
+        self.data = []
         super.init(nibName: nil, bundle: nil)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,7 +29,7 @@ class UsersGroupController: UIViewController, UITableViewDelegate, UITableViewDa
         configureTableView()
     }
     
-    func configureNavigation() {
+    private func configureNavigation() {
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 30, width: CGFloat(Double(self.view.frame.width) * 0.9), height: 44))
         view.addSubview(searchBar)
         let navButton = UIButton(frame: CGRect(x: CGFloat(Double(self.view.frame.width) * 0.9), y:30, width: CGFloat(Double(self.view.frame.width) * 0.1), height: 44))
@@ -36,33 +38,33 @@ class UsersGroupController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addSubview(navButton)
     }
     
-    func configureTableView(){
+    private func configureTableView(){
         self.view.backgroundColor = .white
-        usersTableView.dataSource = self
-        usersTableView.delegate = self
-        view.addSubview(usersTableView)
-        usersTableView.frame = CGRect(x: 0, y: 74, width: view.bounds.width, height: view.bounds.height - 74)
-        usersTableView.register(GroupTableViewCell.self, forCellReuseIdentifier: "GroupCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.addSubview(tableView)
+        tableView.frame = CGRect(x: 0, y: 74, width: view.bounds.width, height: view.bounds.height - 74)
+        tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: "GroupCell")
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataArray.count
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section = self.dataArray[section]
+        let section = self.data[section]
         return section.tableCell.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupTableViewCell
-        cell.configure(group: dataArray[indexPath.section].tableCell[indexPath.row])
+        cell.configure(group: data[indexPath.section].tableCell[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection
                                 section: Int) -> String? {
-        return "\(dataArray[section].letter)"
+        return "\(data[section].letter)"
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -70,38 +72,39 @@ class UsersGroupController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        dataArray[indexPath.section].tableCell.remove(at: indexPath.row)
-        if dataArray[indexPath.section].tableCell.count == 0 {
-            dataArray.remove(at: indexPath.section)
+        data[indexPath.section].tableCell.remove(at: indexPath.row)
+        if data[indexPath.section].tableCell.count == 0 {
+            data.remove(at: indexPath.section)
         }
-        self.usersTableView.reloadData()
+        self.tableView.reloadData()
     }
     
-    @objc func pushNvigationButton(){
+    @objc private func pushNvigationButton(){
         let groupController = GlobalGroupController()
         groupController.delegate = self
         navigationController?.pushViewController(groupController, animated: true)
         
     }
 }
+
 extension UsersGroupController: DataDelegate {
-    func addReceivedItemToHeaderSectionArray(item: Groups) -> [GroupsHeaderSection]{
-        var newArray: [Groups] = []
-        for headerItem in dataArray{
+    private func addReceivedItemToHeaderSection(item: Group) -> [GroupsHeaderSection]{
+        var newGroups: [Group] = []
+        for headerItem in data{
             for tableCellItem in headerItem.tableCell {
                 if item.name == tableCellItem.name {
-                    return dataArray
+                    return data
                 }
-                newArray.append(tableCellItem)
+                newGroups.append(tableCellItem)
             }
         }
-        newArray.append(item)
-        let tempr = sortByName(groupsArray: newArray)
+        newGroups.append(item)
+        let tempr = sortByName(groups: newGroups)
         return tempr
     }
     
-    func transferGroup(group: Groups){
-        self.dataArray = addReceivedItemToHeaderSectionArray(item: group)
-        self.usersTableView.reloadData()
+    func transferGroup(group: Group){
+        self.data = addReceivedItemToHeaderSection(item: group)
+        self.tableView.reloadData()
     }
 }

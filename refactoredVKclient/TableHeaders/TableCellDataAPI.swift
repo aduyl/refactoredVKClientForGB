@@ -10,79 +10,80 @@ import UIKit
 
 struct UsersHeaderSection {
     let letter: String
-    var tableCell: [Users]
+    var tableCell: [User]
 }
 struct GroupsHeaderSection {
     let letter: String
-    var tableCell: [Groups]
+    var tableCell: [Group]
 }
 
     
-func sortByName(usersArray: [Users]) -> [UsersHeaderSection] {
+func sortByName(users: [User]) -> [UsersHeaderSection] {
     let str = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    var sortedArray = [Users]()
-    var mainSortedArray = [UsersHeaderSection]()
+    var sorted = [User]()
+    var headerSectionSorted = [UsersHeaderSection]()
     
       for i : Int in 0 ..< (str.count) {
-        sortedArray = []
+        sorted = []
         let index = str.index(str.startIndex, offsetBy: i)
         let letter = str[index]
-        for j : Int in 0 ..< usersArray.count {
-              let name = usersArray[j]
+        for j : Int in 0 ..< users.count {
+              let name = users[j]
             let upperName = name.lastName.uppercased()
             if upperName.first == letter {
-                  sortedArray.append(name)
+                  sorted.append(name)
               }
           }
-        if sortedArray.count > 0{
-            let headerElement = UsersHeaderSection(letter: String(letter), tableCell: sortedArray)
-            mainSortedArray.append(headerElement)
+        if sorted.count > 0{
+            let headerElement = UsersHeaderSection(letter: String(letter), tableCell: sorted)
+            headerSectionSorted.append(headerElement)
         }
        }
     
-    return mainSortedArray
+    return headerSectionSorted
 }
 
-func sortByName(groupsArray: [Groups]) -> [GroupsHeaderSection] {
+func sortByName(groups: [Group]) -> [GroupsHeaderSection] {
     let str = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    var sortedArray = [Groups]()
-    var mainSortedArray = [GroupsHeaderSection]()
+    var sorted = [Group]()
+    var headerSectionSorted = [GroupsHeaderSection]()
     
       for i : Int in 0 ..< (str.count) {
-        sortedArray = []
+        sorted = []
         let index = str.index(str.startIndex, offsetBy: i)
         let letter = str[index]
-        for j : Int in 0 ..< groupsArray.count {
-            let name = groupsArray[j]
+        for j : Int in 0 ..< groups.count {
+            let name = groups[j]
             let upperName = name.name.uppercased()
             if upperName.first == letter {
-                sortedArray.append(name)
+                sorted.append(name)
               }
           }
-        if sortedArray.count > 0{
-            let headerElement = GroupsHeaderSection(letter: String(letter), tableCell: sortedArray)
-            mainSortedArray.append(headerElement)
+        if sorted.count > 0{
+            let headerElement = GroupsHeaderSection(letter: String(letter), tableCell: sorted)
+            headerSectionSorted.append(headerElement)
         }
        }
     
-    return mainSortedArray
+    return headerSectionSorted
 }
-func separateCellsAndHeaderSections(usersArray: [UsersHeaderSection]) -> [Users]{
-    var tableCellArray: [Users] = []
-    for item in usersArray {
+func separateCellsAndHeaderSections(users: [UsersHeaderSection]) -> [User]{
+    var tableCellData: [User] = []
+    for item in users {
         for tableCell in item.tableCell {
-            tableCellArray.append(tableCell)
+            tableCellData.append(tableCell)
         }
     }
-    return tableCellArray
+    return tableCellData
 }
 
-func separateCellsAndHeaderSections(groupsArray: [GroupsHeaderSection]) -> [Groups]{
-    var tableCellArray: [Groups] = []
-    for item in groupsArray {
+func separateCellsAndHeaderSections(groups: [GroupsHeaderSection]) -> [Group]{
+    var tableCellData: [Group] = []
+    for item in groups {
         for tableCell in item.tableCell {
-            tableCellArray.append(tableCell)
+            tableCellData.append(tableCell)
         }
     }
-    return tableCellArray
+    return tableCellData
 }
+
