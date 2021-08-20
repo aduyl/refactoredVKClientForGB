@@ -38,7 +38,7 @@ final class GlobalGroupController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - json parsing
     func getData() {
-        network.forecastGroups {[weak self] result in
+        network.downloadGroups {[weak self] result in
             guard let self = self else { return }
             switch result {
             case .failure(let error) :

@@ -34,7 +34,7 @@ final class FriendsController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - json parsing
     func getData() {
-        network.forecastUsers { [weak self] result in
+        network.downloadUsers { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .failure(let error) :

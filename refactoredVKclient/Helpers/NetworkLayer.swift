@@ -16,7 +16,7 @@ import SwiftyJSON
 final class NetworkLayer{
     private let scheme = "https://"
     private let host = "api.vk.com"
-    func forecastUsers(token: String = Session.instance.token, complition: @escaping(Result<[User], Error>) -> Void) {
+    func downloadUsers(token: String = Session.instance.token, complition: @escaping(Result<[User], Error>) -> Void) {
         let path = "/method/friends.get"
         let parameters: Parameters = [
             "access_token": token,
@@ -37,7 +37,7 @@ final class NetworkLayer{
             }
     }
     
-    func forecastGroups(token: String = Session.instance.token, complition: @escaping(Result<[Group], Error>) -> Void) {
+    func downloadGroups(token: String = Session.instance.token, complition: @escaping(Result<[Group], Error>) -> Void) {
         let path = "/method/groups.get"
         let parameters: Parameters = [
             "access_token": token,
@@ -59,7 +59,7 @@ final class NetworkLayer{
             }
     }
     
-    func forecastPhotos(ownerId: Int, token: String = Session.instance.token, complition: @escaping(Result<[PostPhoto], Error>) -> Void) {
+    func downloadPhotos(ownerId: Int, token: String = Session.instance.token, complition: @escaping(Result<[PostPhoto], Error>) -> Void) {
         let path = "/method/photos.getAll"
         let parameters: Parameters = [
             "access_token": token,
