@@ -31,7 +31,7 @@ final class FriendPhotoFeedController: UIViewController, UICollectionViewDataSou
     
     // MARK: - json parsing
     func getData() {
-        network.downloadPhotos(ownerId: user.id, token: Session.instance.token) {
+        network.downloadPhotos(ownerId: user.userId, token: Session.instance.token) {
             [weak self] result in
             guard let self = self else { return }
                         switch result {

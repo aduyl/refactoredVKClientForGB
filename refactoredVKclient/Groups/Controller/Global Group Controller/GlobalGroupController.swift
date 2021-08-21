@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Foundation
+import RealmSwift
 
 protocol DataDelegate: AnyObject {
     func transferGroup(group: Group)
@@ -38,15 +38,12 @@ final class GlobalGroupController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - json parsing
     func getData() {
-        network.downloadGroups {[weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .failure(let error) :
-                self.showAlert(alertText: "\(error)")
-            case .success(let data) :
-                self.data = sortByName(groups: data)
-                self.tableView.reloadData()
-            }
+        do{
+            let realm = try Realm()
+            let gruops = realm.objects(Group.self)
+            self.data = sortByName(groups: Array(gruops))
+        } catch {
+            self.showAlert(alertText: "\(error)")
         }
     }
     

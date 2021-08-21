@@ -20,11 +20,11 @@ class User: Object, Decodable {
     /// url of avatar image
     @objc dynamic var photo100: String
     /// user id
-    @objc dynamic var id: Int
+    @objc dynamic var userId: Int
     
     convenience init(json: SwiftyJSON.JSON) {
         self.init()
-        self.id = json["id"].intValue
+        self.userId = json["id"].intValue
         self.bdate = json["bdate"].stringValue
         self.firstName = json["first_name"].stringValue
         self.lastName = json["last_name"].stringValue

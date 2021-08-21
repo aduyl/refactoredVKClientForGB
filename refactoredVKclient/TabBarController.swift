@@ -6,13 +6,17 @@
 //
 
 import UIKit
+import RealmSwift
+
 
 final class TabBarController: UITabBarController, UITabBarControllerDelegate {
+    var saveData = SaveData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         configure()
+        saveData.getData()
     }
     
     private func configure() {

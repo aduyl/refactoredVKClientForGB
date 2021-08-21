@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Foundation
+import RealmSwift
 
 final class FriendsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate {
     
@@ -34,15 +34,12 @@ final class FriendsController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - json parsing
     func getData() {
-        network.downloadUsers { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .failure(let error) :
-                self.showAlert(alertText: "\(error)")
-            case .success(let data) :
-                self.data = sortByName(users: data)
-                self.tableView.reloadData()
-            }
+        do{
+            let realm = try Realm()
+            let users = realm.objects(User.self)
+            self.data = sortByName(users: Array(users))
+        } catch {
+            self.showAlert(alertText: "\(error)")
         }
     }
     
