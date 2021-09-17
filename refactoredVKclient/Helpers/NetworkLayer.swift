@@ -11,7 +11,7 @@ import SwiftyJSON
 
 // MARK: - NetworkLayerProtocol
 
-
+//https://api.vk.com/method/friends.get?access_token=&fields=bdate,photo_100&v=5.131
 // MARK: - NetworkLayer
 final class NetworkLayer{
     private let scheme = "https://"
@@ -75,7 +75,6 @@ final class NetworkLayer{
                     guard let data = data, let json = try? JSON(data: data) else { return }
 
                     let forecastJSON = json["response"]["items"].arrayValue
-                    //let json = try JSONDecoder().decode([T].self, from: forecastJSON)
                     let forecast = forecastJSON.map{ PostPhoto(json: $0)}
                     complition(.success(forecast))
                 }

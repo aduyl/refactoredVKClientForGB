@@ -20,15 +20,19 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     private func configure() {
+        let news = NewsFeedController()
         let groups = UsersGroupController()
         let frirnds = FriendsController()
-            let groupIcon = UITabBarItem(title: "Group", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3"))
-            groups.tabBarItem = groupIcon
-
-            let friendsIcon = UITabBarItem(title: "Friends", image: UIImage(systemName: "person.2"), selectedImage: UIImage(systemName: "person.2"))
-            frirnds.tabBarItem = friendsIcon
-
-            let controllers = [groups, frirnds]
-            self.viewControllers = controllers
+        
+        let newsIcon = UITabBarItem(title: "News", image: UIImage(systemName: "list.bullet.rectangle"), selectedImage: UIImage(systemName: "list.bullet.rectangle"))
+        let groupIcon = UITabBarItem(title: "Group", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3"))
+        let friendsIcon = UITabBarItem(title: "Friends", image: UIImage(systemName: "person.2"), selectedImage: UIImage(systemName: "person.2"))
+        
+        news.tabBarItem = newsIcon
+        groups.tabBarItem = groupIcon
+        frirnds.tabBarItem = friendsIcon
+        
+        let controllers = [news, groups, frirnds]
+        self.viewControllers = controllers
     }
 }

@@ -60,8 +60,8 @@ final class FriendsController: UIViewController, UITableViewDelegate, UITableVie
                 self.tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
                 print(deletions)
-                print(insertions)
-                print(modifications)
+                //print(insertions)
+                //print(modifications)
             }
         }
     }

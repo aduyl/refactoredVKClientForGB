@@ -12,11 +12,11 @@ class FriendPhotosViewCell: UICollectionViewCell {
     private var isLiked = true
     var likeCount = 0
     lazy var avatar: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.clipsToBounds = true
-        img.layer.cornerRadius = img.layer.frame.height / 2
-        return img
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.layer.cornerRadius = image.layer.frame.height / 2
+        return image
     }()
     
     lazy var userName: UILabel = {
@@ -27,10 +27,10 @@ class FriendPhotosViewCell: UICollectionViewCell {
     }()
     
     lazy var userPhoto: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFit
-        img.clipsToBounds = true
-        return img
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        return image
     }()
     
     lazy var likeButton: UIButton = {
@@ -41,11 +41,11 @@ class FriendPhotosViewCell: UICollectionViewCell {
     }()
     
     lazy var likeLabel: UILabel = {
-        let lable = UILabel()
-        lable.font = UIFont.boldSystemFont(ofSize: 17)
-        lable.translatesAutoresizingMaskIntoConstraints = false
-        lable.textColor = .gray
-        return lable
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .gray
+        return label
     }()
     
     lazy var avatarContainer: UIView = {
