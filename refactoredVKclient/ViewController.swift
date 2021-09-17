@@ -23,10 +23,14 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         configure()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        vkWebView.loadHTMLString("", baseURL: nil)
+    }
+    
     func configure() {
+        view.addSubview(vkWebView)
         vkWebView.navigationDelegate = self
-        vkWebView.uiDelegate = self
-        self.view.addSubview(vkWebView)
         vkWebView.frame = view.bounds
         vkWebView.load(Request.sentRequest())
     }
@@ -50,8 +54,14 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
             Session.instance.token = token
         }
         decisionHandler(.cancel)
-        self.performTabBarController()
+        performTabBarController()
+        
+        vkWebView.stopLoading()
     }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    }
+    
 }
 
 extension ViewController {

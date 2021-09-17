@@ -14,6 +14,7 @@ final class FriendsController: UIViewController, UITableViewDelegate, UITableVie
     var data = [UsersHeaderSection]()
     var searchBar = UISearchBar()
     var network = NetworkLayer()
+    var friendsNotificationToken: NotificationToken?
     // MARK: initialization
     
     init(){
@@ -30,16 +31,38 @@ final class FriendsController: UIViewController, UITableViewDelegate, UITableVie
         configureTableView()
         searchBar.delegate = self
         getData()
+        observerForData()
+        
     }
     
-    // MARK: - json parsing
+    // MARK: - get data from dataBase
     func getData() {
         do{
             let realm = try Realm()
             let users = realm.objects(User.self)
             self.data = sortByName(users: Array(users))
         } catch {
-            self.showAlert(alertText: "\(error)")
+            self.showAlert(alertText: "\(error.localizedDescription)")
+        }
+    }
+    
+    func observerForData() {
+        let realm = try! Realm()
+        print(realm.configuration.fileURL)
+        let users = realm.objects(User.self)
+        friendsNotificationToken = users.observe {
+            change in
+            switch change {
+            case .error(let error):
+                print(error)
+            case .initial:
+                self.data = sortByName(users: Array(users))
+                self.tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                print(deletions)
+                //print(insertions)
+                //print(modifications)
+            }
         }
     }
     

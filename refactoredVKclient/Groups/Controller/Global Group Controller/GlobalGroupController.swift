@@ -19,6 +19,7 @@ final class GlobalGroupController: UIViewController, UITableViewDelegate, UITabl
     let tableView = UITableView()
     var data = [GroupsHeaderSection]()
     var searchBar = UISearchBar()
+    var groupsNotificationToken: NotificationToken?
     weak var delegate: DataDelegate?
     
     init() {
@@ -34,6 +35,7 @@ final class GlobalGroupController: UIViewController, UITableViewDelegate, UITabl
         configureNavigation()
         configureTableView()
         getData()
+        observerForData()
     }
     
     // MARK: - json parsing
@@ -44,6 +46,25 @@ final class GlobalGroupController: UIViewController, UITableViewDelegate, UITabl
             self.data = sortByName(groups: Array(gruops))
         } catch {
             self.showAlert(alertText: "\(error)")
+        }
+    }
+    
+    func observerForData() {
+        let realm = try! Realm()
+        let groups = realm.objects(Group.self)
+        groupsNotificationToken = groups.observe {
+            change in
+            switch change {
+            case .error(let error):
+                print(error)
+            case .initial:
+                self.data = sortByName(groups: Array(groups))
+                self.tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                print(deletions)
+                //print(insertions)
+                //print(modifications)
+            }
         }
     }
     

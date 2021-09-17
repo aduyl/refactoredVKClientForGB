@@ -14,7 +14,7 @@ class Request {
         URLComponents.host = "oauth.vk.com"
         URLComponents.path = "/authorize"
         URLComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "7920321"),
+            URLQueryItem(name: "client_id", value: "7868484"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "scope", value: "friends"),
